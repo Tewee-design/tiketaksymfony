@@ -2,17 +2,37 @@
 
 namespace App\Controller;
 
+use App\Entity\Ticket;
+use App\Form\TicketType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Accueil
-        return $this->render('home/index.html.twig');
+        $ticket = new Ticket();
+        $form = $this->createForm(TicketType::class, $ticket);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistrement
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'ticket valide');
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('home/index.html.twig', [
+            'ticketForm' => $form,
+        ]);
     }
 
     // Pages

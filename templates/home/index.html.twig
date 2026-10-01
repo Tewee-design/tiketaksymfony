@@ -4,28 +4,14 @@
     <h2>ticket</h2>
     <p>introduction à définir</p>
 
-    <form>
-        <div>
-            <label for="categorie">catégorie</label>
-            <select id="categorie">
-                <option>Incident</option>
-                <option>Panne</option>
-                <option>Evolution</option>
-                <option>Anomalie</option>
-                <option>Information</option>
-            </select>
-        </div>
+    {% for message in app.flashes('success') %}
+        <p>{{ message }}</p>
+    {% endfor %}
 
-        <div>
-            <label for="mail">mail</label>
-            <input id="mail" type="email">
-        </div>
-
-        <div>
-            <label for="description">description de la demande</label>
-            <textarea id="description"></textarea>
-        </div>
-    </form>
-
-    <button type="button">envoie</button>
+    {{ form_start(ticketForm) }}
+    {{ form_row(ticketForm.categorie) }}
+    {{ form_row(ticketForm.mail) }}
+    {{ form_row(ticketForm.description) }}
+    {{ form_row(ticketForm.envoie) }}
+    {{ form_end(ticketForm) }}
 {% endblock %}
