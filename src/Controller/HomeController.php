@@ -39,6 +39,11 @@ final class HomeController extends AbstractController
     #[Route('/tickets', name: 'app_tickets')]
     public function tickets(EntityManagerInterface $entityManager): Response
     {
+        // Vérif connexion
+        if (!$this->getUser()) {
+            return $this->render('acces/index.html.twig');
+        }
+
         // Organisation tickets
         $tickets = $entityManager->getRepository(Ticket::class)->findBy([], [
             'dateCreation' => 'DESC',
@@ -52,12 +57,11 @@ final class HomeController extends AbstractController
     #[Route('/compte', name: 'app_compte')]
     public function compte(): Response
     {
-        return $this->render('compte/index.html.twig');
-    }
+        if (!$this->getUser()) {
+            return $this->render('acces/index.html.twig');
+        }
 
-    #[Route('/deconnexion', name: 'app_deconnexion')]
-    public function deconnexion(): Response
-    {
-        return $this->render('deconnexion/index.html.twig');
+        // Infos compte
+        return $this->render('compte/index.html.twig');
     }
 }
