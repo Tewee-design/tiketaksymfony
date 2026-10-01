@@ -37,9 +37,16 @@ final class HomeController extends AbstractController
 
     // Pages
     #[Route('/tickets', name: 'app_tickets')]
-    public function tickets(): Response
+    public function tickets(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('tickets/index.html.twig');
+        // Organisation tickets
+        $tickets = $entityManager->getRepository(Ticket::class)->findBy([], [
+            'dateCreation' => 'DESC',
+        ]);
+
+        return $this->render('tickets/index.html.twig', [
+            'tickets' => $tickets,
+        ]);
     }
 
     #[Route('/compte', name: 'app_compte')]
