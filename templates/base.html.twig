@@ -47,6 +47,41 @@
                 padding: 48px 24px;
                 text-align: center;
             }
+
+            /* Champs */
+            form {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                margin-top: 24px;
+            }
+
+            form div {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            input,
+            select,
+            textarea {
+                margin-top: 8px;
+                border: 1px solid #000000;
+                padding: 8px;
+            }
+
+            textarea {
+                height: 36px;
+            }
+
+            /* Boutons */
+            button {
+                margin-top: 24px;
+                border: 1px solid #000000;
+                background: #ffffff;
+                color: #000000;
+                padding: 8px 16px;
+            }
         </style>
     </head>
     <body>
@@ -55,9 +90,9 @@
             <p>tickets</p>
             <nav>
                 <a href="{{ path('app_home') }}">Accueil</a>
-                <a href="#">Tickets</a>
-                <a href="#">Mon compte</a>
-                <a href="#">Me déconnecter</a>
+                <a href="{{ path('app_tickets') }}">Tickets</a>
+                <a href="{{ path('app_compte') }}">Mon compte</a>
+                <a href="{{ path('app_deconnexion') }}">Me déconnecter</a>
             </nav>
         </header>
 
