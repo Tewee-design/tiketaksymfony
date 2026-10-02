@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Administration
+{% endblock %}
+{% block body %}
+    <h1 class="h3 mb-4">
+        Administration
+    </h1>
+    <div class="row g-3">
+        <div class="col-md-3">
+            <a class="card card-link shadow-sm text-decoration-none" href="{{ path('app_admin_tickets') }}">
+                <div class="card-body">
+                    <strong>
+                        Tickets
+                    </strong>
+                    <div class="display-6">
+                        {{ nbTickets }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a class="card card-link shadow-sm text-decoration-none" href="{{ path('app_admin_categories') }}">
+                <div class="card-body">
+                    <strong>
+                        Catégories
+                    </strong>
+                    <div class="display-6">
+                        {{ nbCategories }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a class="card card-link shadow-sm text-decoration-none" href="{{ path('app_admin_etats') }}">
+                <div class="card-body">
+                    <strong>
+                        États
+                    </strong>
+                    <div class="display-6">
+                        {{ nbEtats }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a class="card card-link shadow-sm text-decoration-none" href="{{ path('app_admin_responsables') }}">
+                <div class="card-body">
+                    <strong>
+                        Responsables
+                    </strong>
+                    <div class="display-6">
+                        {{ nbResponsables }}
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,6 +1,33 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+    Mon compte
+{% endblock %}
 {% block body %}
-    <h2>Mon compte</h2>
-    <p>{{ app.user.userIdentifier }}</p>
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card ticket-card">
+                <div class="card-body p-4">
+                    <h1 class="page-title">
+                        Mon compte
+                    </h1>
+                    <p>
+                        <strong>
+                            Adresse e-mail :
+                        </strong>
+                        {{ app.user.userIdentifier }}
+                    </p>
+                    <p class="mb-0">
+                        <strong>
+                            Rôle :
+                        </strong>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            Administrateur
+                        {% else %}
+                            Personnel de l’agence
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Liste des tickets
+{% endblock %}
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">
+            Liste des tickets
+        </h1>
+        <span class="text-muted">
+            {{ tickets|length }} ticket(s)
+        </span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>
+                        N°
+                    </th>
+                    <th>
+                        Client
+                    </th>
+                    <th>
+                        Catégorie
+                    </th>
+                    <th>
+                        État
+                    </th>
+                    <th>
+                        Ouverture
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                    <tr>
+                        <td>
+                            #{{ ticket.id }}
+                        </td>
+                        <td>
+                            {{ ticket.auteur }}
+                        </td>
+                        <td>
+                            {{ ticket.categorie }}
+                        </td>
+                        <td>
+                            {{ ticket.etat }}
+                        </td>
+                        <td>
+                            {{ ticket.dateOuverture|date('d/m/Y') }}
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-outline-dark btn-sm" href="{{ path('app_ticket_show', {id: ticket.id}) }}">
+                                Consulter
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            Aucun ticket.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

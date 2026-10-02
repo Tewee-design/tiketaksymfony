@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Modifier l’état
+{% endblock %}
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="h3">
+                        Modifier l’état du ticket #{{ ticket.id }}
+                    </h1>
+                    {{ form(form) }}
+                    <a href="{{ path('app_ticket_show', {id: ticket.id}) }}">
+                        Annuler
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,114 +3,60 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>TIKETAK</title>
-        <style>
-            /* Fond page */
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background: #ffffff;
-                color: #000000;
-            }
-
-            /* Titre */
-            header {
-                border-bottom: 1px solid #000000;
-                padding: 24px;
-                text-align: center;
-            }
-
-            header h1,
-            header p {
-                margin: 0;
-            }
-
-            header p {
-                margin-top: 8px;
-            }
-
-            /* Menu */
-            nav {
-                display: flex;
-                justify-content: center;
-                gap: 24px;
-                margin-top: 20px;
-            }
-
-            nav a {
-                color: #000000;
-                text-decoration: none;
-            }
-
-            /* Bloc principal */
-            main {
-                padding: 48px 24px;
-                text-align: center;
-            }
-
-            /* Champs */
-            form {
-                display: flex;
-                justify-content: center;
-                gap: 16px;
-                margin-top: 24px;
-            }
-
-            form div {
-                display: flex;
-                flex-direction: column;
-                text-align: left;
-            }
-
-            input,
-            select,
-            textarea {
-                margin-top: 8px;
-                border: 1px solid #000000;
-                padding: 8px;
-            }
-
-            textarea {
-                height: 36px;
-            }
-
-            /* Boutons */
-            button {
-                margin-top: 24px;
-                border: 1px solid #000000;
-                background: #ffffff;
-                color: #000000;
-                padding: 8px 16px;
-            }
-            /* Tableau tickets */
-            table {
-                width: 100%;
-                margin-top: 24px;
-                border-collapse: collapse;
-            }
-
-            th,
-            td {
-                border: 1px solid #000000;
-                padding: 10px;
-                text-align: left;
-            }
-        </style>
+        <title>
+            {% block title %}
+                TIKETAK
+            {% endblock %}
+        </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/app.css">
     </head>
     <body>
-        <header>
-            <h1>TIKETAK</h1>
-            <p>tickets</p>
-            <nav>
-                <a href="{{ path('app_home') }}">Accueil</a>
-                <a href="{{ path('app_tickets') }}">Tickets</a>
-                <a href="{{ path('app_compte') }}">Mon compte</a>
-                <a href="{{ path('app_logout') }}">Me déconnecter</a>
+        <header class="container pt-4">
+            <a class="site-title" href="{{ path('app_home') }}">
+                TIKETAK
+            </a>
+            <p class="site-subtitle">
+                Créateur de tickets
+            </p>
+            <nav class="site-header" aria-label="Navigation principale">
+                <a href="{{ path('app_home') }}">
+                    Accueil
+                </a>
+                <a href="{{ path('app_ticket_index') }}">
+                    Tickets
+                </a>
+                {# Menu admin #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_admin') }}">
+                        Administration
+                    </a>
+                {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('app_compte') }}">
+                        Mon compte
+                    </a>
+                    <a href="{{ path('app_logout') }}">
+                        Me déconnecter
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_compte') }}">
+                        Mon compte
+                    </a>
+                    <a href="{{ path('app_login') }}">
+                        Connexion
+                    </a>
+                {% endif %}
             </nav>
         </header>
-
-        <main>
-            {% block body %}{% endblock %}
+        <main class="container pb-5">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% block body %}
+            {% endblock %}
         </main>
     </body>
 </html>

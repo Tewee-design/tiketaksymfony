@@ -3,65 +3,35 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
-use App\Form\TicketType;
+use App\Form\TicketPublicType;
+use App\Repository\EtatRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
-final class HomeController extends AbstractController
+class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, EtatRepository $etats): Response
     {
         // Accueil
         $ticket = new Ticket();
-        $form = $this->createForm(TicketType::class, $ticket);
+        $form = $this->createForm(TicketPublicType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Départ
+            $ticket->setEtat($etats->findOneBy(['libelle' => 'Nouveau']));
             // Enregistrement
             $entityManager->persist($ticket);
             $entityManager->flush();
-
-            $this->addFlash('success', 'ticket valide');
+            $this->addFlash('success', 'Ticket validé');
 
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('home/index.html.twig', [
-            'ticketForm' => $form,
-        ]);
-    }
-
-    // Pages
-    #[Route('/tickets', name: 'app_tickets')]
-    public function tickets(EntityManagerInterface $entityManager): Response
-    {
-        // Vérif connexion
-        if (!$this->getUser()) {
-            return $this->render('acces/index.html.twig');
-        }
-
-        // Organisation tickets
-        $tickets = $entityManager->getRepository(Ticket::class)->findBy([], [
-            'dateCreation' => 'DESC',
-        ]);
-
-        return $this->render('tickets/index.html.twig', [
-            'tickets' => $tickets,
-        ]);
-    }
-
-    #[Route('/compte', name: 'app_compte')]
-    public function compte(): Response
-    {
-        if (!$this->getUser()) {
-            return $this->render('acces/index.html.twig');
-        }
-
-        // Infos compte
-        return $this->render('compte/index.html.twig');
+        return $this->render('home/index.html.twig', ['form' => $form]);
     }
 }

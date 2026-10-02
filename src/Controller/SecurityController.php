@@ -9,7 +9,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class SecurityController extends AbstractController
 {
-    #[Route('/connexion', name: 'app_login')]
+    #[Route('/login', name: 'app_login')]
+    #[Route('/connexion', name: 'app_connexion')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // Connexion

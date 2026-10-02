@@ -1,17 +1,40 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}
+    Déclaration de tickets
+{% endblock %}
 {% block body %}
-    <h2>ticket</h2>
-    <p>introduction à définir</p>
-
-    {% for message in app.flashes('success') %}
-        <p>{{ message }}</p>
-    {% endfor %}
-
-    {{ form_start(ticketForm) }}
-    {{ form_row(ticketForm.categorie) }}
-    {{ form_row(ticketForm.mail) }}
-    {{ form_row(ticketForm.description) }}
-    {{ form_row(ticketForm.envoie) }}
-    {{ form_end(ticketForm) }}
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card ticket-card">
+                <div class="card-body p-4">
+                    <h1 class="page-title">
+                        Déclaration de tickets
+                    </h1>
+                    <p class="intro-text">
+                        Nous vous invitons à formuler votre demande ci-dessous. Nos équipes prendront en charge votre requête.
+                    </p>
+                    {{ form_start(form, {'attr': {'class': 'ticket-form'}}) }}
+                    <div class="ticket-field">
+                        {{ form_label(form.categorie) }}
+                            {{ form_widget(form.categorie) }}
+                            {{ form_errors(form.categorie) }}
+                    </div>
+                    <div class="ticket-field">
+                        {{ form_label(form.auteur) }}
+                            {{ form_widget(form.auteur) }}
+                            {{ form_errors(form.auteur) }}
+                    </div>
+                    <div class="ticket-field request-field">
+                        {{ form_label(form.description, 'Décrivez votre demande :') }}
+                            {{ form_widget(form.description) }}
+                            {{ form_errors(form.description) }}
+                    </div>
+                    <div class="send-ticket">
+                        {{ form_widget(form.envoyer, {'attr': {'class': 'app-button'}}) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

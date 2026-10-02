@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Ticket #{{ ticket.id }}
+{% endblock %}
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">
+            Ticket #{{ ticket.id }}
+        </h1>
+        <a class="btn btn-outline-dark" href="{{ path('app_ticket_index') }}">
+            Retour à la liste
+        </a>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">
+                    Client
+                </dt>
+                <dd class="col-sm-9">
+                    {{ ticket.auteur }}
+                </dd>
+                <dt class="col-sm-3">
+                    Catégorie
+                </dt>
+                <dd class="col-sm-9">
+                    {{ ticket.categorie }}
+                </dd>
+                <dt class="col-sm-3">
+                    État
+                </dt>
+                <dd class="col-sm-9">
+                    {{ ticket.etat }}
+                    <a class="btn btn-sm btn-dark ms-2" href="{{ path('app_ticket_etat', {id: ticket.id}) }}">
+                        Modifier l’état
+                    </a>
+                </dd>
+                <dt class="col-sm-3">
+                    Responsable
+                </dt>
+                <dd class="col-sm-9">
+                    {{ ticket.responsable ?: 'Non attribué' }}
+                </dd>
+                <dt class="col-sm-3">
+                    Ouverture
+                </dt>
+                <dd class="col-sm-9">
+                    {{ ticket.dateOuverture|date('d/m/Y') }}
+                </dd>
+                <dt class="col-sm-3">
+                    Clôture
+                </dt>
+                <dd class="col-sm-9">
+                    {{ ticket.dateCloture ? ticket.dateCloture|date('d/m/Y') : 'Non renseignée' }}
+                </dd>
+                <dt class="col-sm-3">
+                    Description
+                </dt>
+                <dd class="col-sm-9 description">
+                    {{ ticket.description }}
+                </dd>
+            </dl>
+        </div>
+    </div>
+{% endblock %}
